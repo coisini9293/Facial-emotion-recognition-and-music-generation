@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emo2Music - Emotion to Music Instantly | Conrad Competition Project</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2A5B9C;
+            --primary-green: #4CAF50;
+            --secondary-blue: #6BA4E9;
+            --light-blue: #E8F4FF;
+            --dark-blue: #1A365D;
+            --gray-light: #F5F7FA;
+            --gray-medium: #E2E8F0;
+            --gray-dark: #718096;
+            --white: #FFFFFF;
+            --black: #2D3748;
+            --accent-purple: #9F7AEA;
+            --accent-orange: #ED8936;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: var(--white);
+            border-radius: 50%;
+            color: var(--primary-blue);
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--light-blue);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--light-blue);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 120px;
+            background: linear-gradient(135deg, var(--light-blue) 0%, rgba(255, 255, 255, 0.9) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(107, 164, 233, 0.1) 0%, rgba(107, 164, 233, 0) 70%);
+            top: -300px;
+            right: -200px;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--dark-blue);
+        }
+        
+        .hero .tagline {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: var(--gray-dark);
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: 2px solid var(--primary-green);
+        }
+        
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary-green);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+        
+        /* Section Common Styles */
+        section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--gray-dark);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Product Introduction */
+        .product-intro {
+            background-color: var(--gray-light);
+        }
+        
+        .product-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+        
+        .product-text {
+            flex: 1;
+        }
+        
+        .product-visual {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .product-image {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-image:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-list {
+            margin-top: 30px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        
+        .feature-icon {
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+        
+        /* Innovation Model */
+        .model-demo {
+            position: relative;
+        }
+        
+        .architecture-diagram {
+            max-width: 900px;
+            margin: 0 auto 50px;
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .architecture-diagram img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        
+        .model-stats {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.2rem;
+            color: var(--gray-dark);
+        }
+        
+        /* Performance Charts */
+        .performance-charts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .chart-container {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .chart-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .chart-container img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        
+        .chart-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--dark-blue);
+        }
+        
+        /* Impact & Value */
+        .impact-section {
+            background-color: var(--light-blue);
+        }
+        
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .impact-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .impact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .impact-icon {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+        
+        /* User Feedback Chart */
+        .feedback-chart {
+            max-width: 800px;
+            margin: 60px auto 0;
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .feedback-chart img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--light-blue);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column a {
+            color: var(--gray-medium);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column a:hover {
+            color: var(--white);
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray-medium);
+            font-size: 0.9rem;
+        }
+        
+        /* Animation Effects */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .product-content {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero .tagline {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .mobile-nav {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-blue);
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                display: none;
+                z-index: 999;
+            }
+            
+            .mobile-nav.active {
+                display: block;
+            }
+            
+            .mobile-nav ul {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .hero {
+                padding: 150px 0 80px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero .tagline {
+                font-size: 1.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            section {
+                padding: 70px 0;
+            }
+            
+            .performance-charts {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero .tagline {
+                font-size: 1.3rem;
+            }
+            
+            .stat-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-music"></i>
+                </div>
+                <div>Emo2Music</div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#product">Product</a></li>
+                    <li><a href="#model">Innovation Model</a></li>
+                    <li><a href="#impact">Impact & Value</a></li>
+                </ul>
+            </nav>
+            
+            <nav class="mobile-nav" id="mobileNav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#product">Product</a></li>
+                    <li><a href="#model">Innovation Model</a></li>
+                    <li><a href="#impact">Impact & Value</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1>Cross-Modal Emotional Music Generation System</h1>
+                <div class="tagline">Emotion to Music Instantly</div>
+                <p>Based on visual-language-audio multi-agent collaboration, transforming facial emotions into personalized music in real-time. Providing zero-threshold creative experience for China's 900 million digital music users, enabling everyone to express emotions through music.</p>
+                <div class="cta-buttons">
+                    <a href="#product" class="btn btn-primary">Explore Product</a>
+                    <a href="#model" class="btn btn-secondary">View Demo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Introduction -->
+    <section class="product-intro" id="product">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Product Introduction</h2>
+                <p>We've built a complete closed-loop system from emotion recognition to music generation, making music creation simple, fast, and emotionally rich</p>
+            </div>
+            
+            <div class="product-content fade-in">
+                <div class="product-text">
+                    <h3>How to Use Emo2Music</h3>
+                    <p>Users simply upload a facial photo or use the camera to capture expressions in real-time. The system generates personalized music matching the current emotion within 3 minutes.</p>
+                    
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div>
+                                <h4>Real-time Emotion Recognition</h4>
+                                <p>Based on ResEmoteNet model with 94.76% accuracy (RAF-DB dataset), supporting 7 basic emotion classifications.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div>
+                                <h4>Intelligent Prompt Generation</h4>
+                                <p>Utilizing LLM to transform emotion features into structured MusicGen Prompts, automatically matching music style, BPM, and instrument combinations.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <div>
+                                <h4>Personalized Music Generation</h4>
+                                <p>Generating high-quality music based on AudioCraft framework, designing exclusive styles for different emotions with 85% emotion-matching accuracy.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#model" class="btn btn-primary" style="margin-top: 20px;">Learn Technical Details</a>
+                </div>
+                
+                <div class="product-visual">
+                    <!-- Application Interface Image 1 -->
+                    <div class="chart-container">
+                        <h3 class="chart-title">Web Application Interface</h3>
+                        <img src="https://i.ibb.co/3ywr1LgQ/image.png" alt="Emo2Music Web Application Interface Screenshot" class="product-image">
+                        <p style="text-align: center; margin-top: 15px; color: var(--gray-dark);">User-friendly interface, generating personalized music in three simple steps</p>
+                    </div>
+                    
+                    <!-- Application Interface Image 2 -->
+                    <div class="chart-container">
+                        <h3 class="chart-title">Mobile Interface</h3>
+                        <img src="https://i.ibb.co/hJyRQd6T/image.png" alt="Emo2Music Mobile Interface Screenshot" class="product-image">
+                        <p style="text-align: center; margin-top: 15px; color: var(--gray-dark);">Mobile app supports emotion-based music creation anytime, anywhere</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Innovation Model -->
+    <section class="model-demo" id="model">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Innovation Model</h2>
+                <p>Based on multi-agent collaborative architecture, achieving end-to-end process from visual emotion recognition to personalized music generation</p>
+            </div>
+            
+            <!-- System Architecture Diagram -->
+            <div class="architecture-diagram fade-in">
+                <h3 style="text-align: center; margin-bottom: 20px; color: var(--dark-blue);">System Architecture Overview</h3>
+                <img src="https://i.ibb.co/v4v17993/image.png" alt="Cross-Modal Emotional Music Generation System Architecture">
+                <p style="text-align: center; margin-top: 20px; color: var(--gray-dark);">Complete closed-loop workflow: Emotion Recognition → Prompt Generation → Music Generation → User Feedback</p>
+            </div>
+            
+            <!-- System Performance Charts -->
+            <div class="performance-charts">
+                <div class="chart-container fade-in">
+                    <h3 class="chart-title">GPU/CPU Performance Comparison</h3>
+                    <img src="https://i.ibb.co/DgS47W5z/image.png" alt="System GPU/CPU Performance Comparison Chart">
+                    <p style="text-align: center; margin-top: 15px; color: var(--gray-dark);">GPU vs CPU performance comparison, demonstrating system's real-time processing capability</p>
+                </div>
+                
+                <div class="chart-container fade-in">
+                    <h3 class="chart-title">Concurrent Response Time</h3>
+                    <img src="https://i.ibb.co/Cpdk61Wq/2.png" alt="Concurrent Response Time Chart">
+                    <p style="text-align: center; margin-top: 15px; color: var(--gray-dark);">System response time remains stable under high concurrency, meeting large-scale user demands</p>
+                </div>
+            </div>
+            
+            <!-- Performance Evaluation Chart -->
+            <div class="feedback-chart fade-in">
+                <h3 style="text-align: center; margin-bottom: 20px; color: var(--dark-blue);">A/B Test Performance Evaluation</h3>
+                <img src="https://i.ibb.co/VcRZLNRw/image.png" alt="System Performance Evaluation Chart">
+                <p style="text-align: center; margin-top: 15px; color: var(--gray-dark);">Comparison with traditional models shows significant improvement in key metrics</p>
+            </div>
+            
+            <div class="model-stats">
+                <div class="stat-card fade-in">
+                    <div class="stat-value">94.76%</div>
+                    <div class="stat-label">Emotion Recognition Accuracy (RAF-DB)</div>
+                    <p style="margin-top: 15px; color: var(--gray-dark);">Outperforms FER-2013 (79.79%) and AffectNet (76.3%), ensuring accurate and reliable emotion features</p>
+                </div>
+                
+                <div class="stat-card fade-in">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">Music-Emotion Matching Rate</div>
+                    <p style="margin-top: 15px; color: var(--gray-dark);">User evaluation shows high alignment between music and target emotions, far exceeding traditional methods</p>
+                </div>
+                
+                <div class="stat-card fade-in">
+                    <div class="stat-value">&lt;3 min</div>
+                    <div class="stat-label">Music Generation Time</div>
+                    <p style="margin-top: 15px; color: var(--gray-dark);">40-70% faster than traditional AI music tools, achieving near-real-time emotional music generation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact & Value -->
+    <section class="impact-section" id="impact">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Impact & Value</h2>
+                <p>Our system is not just a technological innovation, but also a social tool promoting mental health and emotional expression</p>
+            </div>
+            
+            <div class="impact-grid">
+                <div class="impact-card fade-in">
+                    <div class="impact-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Mental Health Support</h3>
+                    <p>Provides quantifiable auxiliary tools for psychological counseling, stress management, and emotional regulation, lowering barriers to mental health services. User emotional improvement rating: 4.3/5.</p>
+                </div>
+                
+                <div class="impact-card fade-in">
+                    <div class="impact-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Emotional Education Innovation</h3>
+                    <p>Serves as an emotional education and music innovation teaching tool, enhancing students' emotional recognition and expression abilities. Pilot cooperation established with Shanghai Conservatory of Music Middle School.</p>
+                </div>
+                
+                <div class="impact-card fade-in">
+                    <div class="impact-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Democratization of Creation</h3>
+                    <p>Enables 85% of China's 900 million digital music users who cannot create music to express emotions with zero barriers. User retention increased by 217%, personalization degree improved by 200%.</p>
+                </div>
+                
+                <div class="impact-card fade-in">
+                    <div class="impact-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Corporate Wellness Management</h3>
+                    <p>Used for employee emotion monitoring and workplace atmosphere improvement, assisting corporate wellness management and efficiency enhancement. B2B cooperation discussions with multiple tech companies underway.</p>
+                </div>
+            </div>
+            
+            <!-- User Feedback Statistics Chart -->
+            <div class="feedback-chart fade-in">
+                <h3 style="text-align: center; margin-bottom: 20px; color: var(--dark-blue);">User Satisfaction Evaluation</h3>
+                <img src="https://i.ibb.co/ZzVh6Q4h/image.png" alt="User Feedback Statistics Chart">
+                <p style="text-align: center; margin-top: 15px; color: var(--gray-dark);">Survey results from 300+ users show high ratings across five key dimensions</p>
+            </div>
+            
+            <div style="max-width: 800px; margin: 60px auto 0; background-color: var(--white); border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);" class="fade-in">
+                <h3 style="text-align: center; margin-bottom: 25px; color: var(--dark-blue);">Why Choose Emo2Music?</h3>
+                <div style="display: flex; align-items: center; gap: 30px;">
+                    <div style="flex: 1;">
+                        <p style="margin-bottom: 15px; color: var(--gray-dark);">Traditional AI music tools require professional knowledge, take longer, and struggle to capture subtle emotional changes. Emo2Music achieves through multi-agent collaborative architecture:</p>
+                        <ul style="list-style-type: none; color: var(--gray-dark);">
+                            <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">
+                                <i class="fas fa-check" style="color: var(--primary-green); position: absolute; left: 0; top: 5px;"></i>
+                                <strong>Ultra-precise Emotion Mapping:</strong> Even punctuation changes influence music output, achieving unprecedented emotional accuracy
+                            </li>
+                            <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">
+                                <i class="fas fa-check" style="color: var(--primary-green); position: absolute; left: 0; top: 5px;"></i>
+                                <strong>Scenario-based Presets:</strong> Emotion-to-scenario keyword mapping simplifies creation process
+                            </li>
+                            <li style="margin-bottom: 10px; padding-left: 25px; position: relative;">
+                                <i class="fas fa-check" style="color: var(--primary-green); position: absolute; left: 0; top: 5px;"></i>
+                                <strong>Built-in Copyright Protection:</strong> Generated music is safe for commercial use, removing creators' concerns
+                            </li>
+                            <li style="padding-left: 25px; position: relative;">
+                                <i class="fas fa-check" style="color: var(--primary-green); position: absolute; left: 0; top: 5px;"></i>
+                                <strong>Cost Advantage:</strong> Monthly fee only ¥8, 50% cheaper than competitors, B2B annual fee ¥30000
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="flex: 1; text-align: center;">
+                        <div style="width: 150px; height: 150px; margin: 0 auto; background: linear-gradient(135deg, var(--primary-blue), var(--primary-green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h4 style="margin-top: 20px; color: var(--dark-blue);">Clear Commercialization Roadmap</h4>
+                        <p style="color: var(--gray-dark);">MVP prototype completed, mobile app launch within 6 months, scalable commercial implementation within 2 years</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Emo2Music</h3>
+                    <p style="color: var(--gray-medium); margin-bottom: 20px;">Emotion to Music Instantly - Cross-Modal Emotional Music Generation System</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Zhangjiang High-Tech Park, Pudong District, Shanghai</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>1234578910</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>contact@emo2music.ai</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#product">Product</a></li>
+                        <li><a href="#model">Innovation Model</a></li>
+                        <li><a href="#impact">Impact & Value</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Application Scenarios</h3>
+                    <ul>
+                        <li><a href="#impact">Mental Health</a></li>
+                        <li><a href="#impact">School Education</a></li>
+                        <li><a href="#impact">Corporate Wellness</a></li>
+                        <li><a href="#impact">Content Creation</a></li>
+                        <li><a href="#impact">Personal Use</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Follow Us</h3>
+                    <div style="display: flex; gap: 15px; margin-top: 20px;">
+                        <a href="#" style="color: var(--gray-medium); font-size: 1.5rem;"><i class="fab fa-weixin"></i></a>
+                        <a href="#" style="color: var(--gray-medium); font-size: 1.5rem;"><i class="fab fa-weibo"></i></a>
+                        <a href="#" style="color: var(--gray-medium); font-size: 1.5rem;"><i class="fab fa-bilibili"></i></a>
+                        <a href="#" style="color: var(--gray-medium); font-size: 1.5rem;"><i class="fab fa-github"></i></a>
+                    </div>
+                    <p style="color: var(--gray-medium); margin-top: 25px;">Conrad Competition Project - 2024</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 Emo2Music Cross-Modal Emotional Music Generation System. All rights reserved.</p>
+                <p>This website is for Conrad Competition project presentation. All data is based on actual research results.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+        });
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if(this.getAttribute('href') === '#') return;
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if(targetElement) {
+                    // Close mobile menu
+                    mobileNav.classList.remove('active');
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Scroll animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInOnScroll = () => {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if(elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+        
+        // Check on initial load
+        window.addEventListener('load', fadeInOnScroll);
+        // Check on scroll
+        window.addEventListener('scroll', fadeInOnScroll);
+        
+        // Check immediately after page loads
+        setTimeout(fadeInOnScroll, 100);
+    </script>
+</body>
+</html>
